@@ -93,6 +93,8 @@ namespace ImpHunter {
                     position.X = other.Position.X - carriage.Center.X;
                     break;
             }
+
+            velocity *= -0.3f;
         }
     }
 }

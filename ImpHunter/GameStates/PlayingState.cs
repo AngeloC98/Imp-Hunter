@@ -30,6 +30,10 @@ namespace ImpHunter {
         /// </summary>
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime) {
+            foreach(SpriteGameObject tower in fortress.Towers.Children)
+            {
+                cannon.CheckBounce(tower);
+            }
             base.Update(gameTime);
         }
 
