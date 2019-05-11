@@ -61,6 +61,8 @@ namespace ImpHunter {
                 acceleration = new Vector2(0.1f, 0);
             }
 
+            barrel.Angle = (float) Math.Atan2(position.Y - inputHelper.MousePosition.Y, position.X - inputHelper.MousePosition.X) - (float) Math.PI / 2;
+
             base.HandleInput(inputHelper);
         }
 
@@ -73,6 +75,7 @@ namespace ImpHunter {
             position += velocity;
             velocity *= friction;
             acceleration = new Vector2(0,0);
+
             base.Update(gameTime);
         }
         
@@ -94,7 +97,7 @@ namespace ImpHunter {
                     break;
             }
 
-            velocity *= -0.3f;
+            velocity *= -0.5f;
         }
     }
 }
