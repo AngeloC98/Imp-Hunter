@@ -6,8 +6,11 @@ namespace ImpHunter {
         Cannon cannon;
         Crosshair crosshair;
         Fortress fortress;
+        GameObjectList balls;
+        GameObjectList imps;
 
         private const int SHOOT_COOLDOWN = 20;
+        const int BALL_SPEED = 500;
         private int shootTimer = SHOOT_COOLDOWN;
 
         /// <summary>
@@ -16,8 +19,13 @@ namespace ImpHunter {
         public PlayingState() {
             Add(new SpriteGameObject("spr_background"));
 
+            Add(balls = new GameObjectList());
+
             Add(cannon = new Cannon());
             cannon.Position = new Vector2(GameEnvironment.Screen.X / 2, 490);
+
+            Add(imps = new GameObjectList());
+            imps.Add(new Imp(cannon));
 
             Add(fortress = new Fortress());
 
@@ -33,6 +41,11 @@ namespace ImpHunter {
             foreach(SpriteGameObject tower in fortress.Towers.Children)
             {
                 cannon.CheckBounce(tower);
+                foreach(Ball ball in balls.Children)
+                {
+                    ball.CheckBounce(tower);
+                    ball.CheckBounce(fortress.Wall);
+                }
             }
             base.Update(gameTime);
         }
@@ -46,9 +59,11 @@ namespace ImpHunter {
 
             shootTimer++;
 
-            if (inputHelper.MouseLeftButtonPressed() && shootTimer > SHOOT_COOLDOWN) {
+            if (inputHelper.MouseLeftButtonDown() && shootTimer > SHOOT_COOLDOWN) {
                 crosshair.Expand(SHOOT_COOLDOWN);
                 shootTimer = 0;
+                Vector2 direction = new Vector2(cannon.Position.X - inputHelper.MousePosition.X, cannon.Position.Y - inputHelper.MousePosition.Y) * -1;
+                balls.Add(new Ball(cannon.Position, Vector2.Normalize(direction) * BALL_SPEED));
             }
 
         }
