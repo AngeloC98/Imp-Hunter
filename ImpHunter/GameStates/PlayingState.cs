@@ -29,7 +29,15 @@ namespace ImpHunter {
 
             Add(imps = new GameObjectList());
             imps.Add(new Imp(cannon));
-            imps.Add(new Boss(targets));
+            Boss boss = new Boss(targets);
+            imps.Add(boss);
+            for (int i = 0; i < 3; i++)
+            {
+                Imp swarm = new Imp(boss);
+                swarm.Position = boss.Position * i / 2;
+                swarm.Scale = 0.5f;
+                imps.Add(swarm);
+            }
 
             // Always draw the crosshair last.
             Add(crosshair = new Crosshair());
