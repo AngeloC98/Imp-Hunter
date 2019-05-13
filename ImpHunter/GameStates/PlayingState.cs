@@ -12,6 +12,7 @@ namespace ImpHunter {
         private const int SHOOT_COOLDOWN = 20;
         const int BALL_SPEED = 500;
         private int shootTimer = SHOOT_COOLDOWN;
+        Vector2[] targets = new Vector2[] { new Vector2(100, 100), new Vector2(300, 500), new Vector2(700, 500), new Vector2(100, 300), new Vector2(500, 200) };
 
         /// <summary>
         /// PlayingState constructor which adds the different gameobjects and lists in the correct order of drawing.
@@ -24,10 +25,11 @@ namespace ImpHunter {
             Add(cannon = new Cannon());
             cannon.Position = new Vector2(GameEnvironment.Screen.X / 2, 490);
 
+            Add(fortress = new Fortress());
+
             Add(imps = new GameObjectList());
             imps.Add(new Imp(cannon));
-
-            Add(fortress = new Fortress());
+            imps.Add(new Boss(targets));
 
             // Always draw the crosshair last.
             Add(crosshair = new Crosshair());

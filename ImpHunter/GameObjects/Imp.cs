@@ -34,7 +34,6 @@ namespace ImpHunter
                 velocity = Vector2.Normalize(target.Position - position) * speed;
             }
 
-            Console.WriteLine(position + " - " + velocity);
             base.Update(gameTime);
         }
          
