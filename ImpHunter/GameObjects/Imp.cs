@@ -10,7 +10,8 @@ namespace ImpHunter
     class Imp : PhysicsObject
     {
         GameObject target;
-        int speed = 50;
+        float speed = 50;
+        float range = 400;
 
         public Imp(GameObject target) : base("spr_imp_flying")
         {
@@ -21,7 +22,18 @@ namespace ImpHunter
 
         public override void Update(GameTime gameTime)
         {
-            velocity = Vector2.Normalize(target.Position - position) * speed;
+            
+            float distance = Vector2.Distance(target.Position, position);
+
+            if (distance < range)
+            {
+                velocity = Vector2.Normalize(target.Position - position) * speed * (distance / range);
+            }
+            else
+            {
+                velocity = Vector2.Normalize(target.Position - position) * speed;
+            }
+
             Console.WriteLine(position + " - " + velocity);
             base.Update(gameTime);
         }
