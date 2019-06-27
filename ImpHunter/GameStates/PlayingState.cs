@@ -33,9 +33,7 @@ namespace ImpHunter {
             imps.Add(boss);
             for (int i = 0; i < 3; i++)
             {
-                Imp swarm = new Imp(boss);
-                swarm.Position = boss.Position * i / 2;
-                swarm.Scale = 0.5f;
+                SwarmImp swarm = new SwarmImp(boss, MathHelper.ToRadians(120) * i, 100);
                 imps.Add(swarm);
             }
 
